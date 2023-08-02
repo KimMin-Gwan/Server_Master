@@ -7,6 +7,22 @@ def preprocessing_text_data(file_path): #txt 파일 텍스트 정리
 
     data = file.read()
 
+    split_data = data.split('/')
+
+    text_data = []
+    for i in split_data:
+        new_str = re.sub(r"[^\uAC00-\uD7A3a-zA-Z\s0-9]", "", i)
+        new_str = new_str.replace(" ", "")
+        #print(new_str)
+        text_data.append(new_str)
+    
+    return list(set(text_data))
+
+def preprocessing_text_data_dot(file_path): #txt 파일 텍스트 정리
+    file = open(file_path, encoding='UTF8')
+
+    data = file.read()
+
     split_data = data.split(',')
 
     text_data = []
@@ -102,7 +118,7 @@ def add_txt_dict_ai(dict_aac,PATH): #텍스트 파일로 딕셔너리 만들기 
         if str(i["id"])[:2] == "90":
             index = int(str(i["id"])[2:])
 
-    aac_data = preprocessing_text_data(PATH)
+    aac_data = preprocessing_text_data_dot(PATH)
     for i in aac_data:  
         index = index + 1
         dict_aac["AAC"].append({
@@ -220,7 +236,7 @@ def open_json(PATH): #json 불러오기
 
 def make_json(dict_data): #json 저장
     json_data = json.dumps(dict_data, indent="\t", ensure_ascii=False)
-    with open('json_data_test.json', 'w') as f:
+    with open('json_data_test.json', 'w', encoding='euc-kr') as f:
         f.write(json_data)
 
 
@@ -232,6 +248,7 @@ def main():
     add_txt_dict_category(dict_aac,"카테고리/test_category.txt")
     add_txt_dict_flow(dict_aac, "카테고리/test_flow.txt")   
     add_txt_dict_AAC(dict_aac, "카테고리/test_aac.txt")
+    add_txt_dict_ai(dict_aac, "카테고리/category.txt")
 
     node_list=["주문", "요청카페", "계산요청"]
     node_add_multi(dict_aac, id_finder(dict_aac,"카페"), id_finder_multi(dict_aac,node_list))
