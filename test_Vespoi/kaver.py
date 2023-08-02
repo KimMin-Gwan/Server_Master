@@ -2,13 +2,13 @@ import requests
 from urllib.parse import urlparse
 import json
 
-client_id = '_________________' 
-client_secret = '_______________'
+client_id = '________________________' 
+client_secret = '_________________________'
 naver_headers = {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret':client_secret}
-kakao_headers={"Authorization": "KakaoAK _________________"} 
+kakao_headers={"Authorization": "KakaoAK ______________________"} 
 
-test_lat = 128.693185
-test_lon = 35.868442
+test_lat = 128.731580
+test_lon = 35.833593
 
 def getBuildName(lat, lon):
     url = f"https://dapi.kakao.com/v2/local/geo/coord2address.json?x={lat}&y={lon}"
@@ -23,8 +23,7 @@ def getBuildName(lat, lon):
         return BD_name
 
     except:
-        err = "error not found"
-        return err
+        return json.dumps(result,indent=4,ensure_ascii=False)
    
 
 def getBuildUse(name):
@@ -35,21 +34,14 @@ def getBuildUse(name):
     url_middle="$&start="
     number='1'
 
-    if(name == "error not found"):
-        err = "failled to find bd use"
-        return err
-
     url = url_base + keyword + url_middle + number
-    result = requests.get(url,headers = naver_headers).json()
-    #BdUse = json.dumps(result['items'][0]["category"],indent=4,ensure_ascii=False)
-    BdUse = result['items'][0].pop('category', None)
-    data = BdUse.split('>')
-    result_json = {'category': data[1]}
+    try:
+        result = requests.get(url,headers = naver_headers).json()
+        BdUse = json.dumps(result['items'][0]["category"],indent=4,ensure_ascii=False)
 
-    return result_json
-
-    
-
+        return BdUse
+    except:
+        return json.dumps(result,indent=4,ensure_ascii=False)
 
 
 test_name = getBuildName(test_lat,test_lon)

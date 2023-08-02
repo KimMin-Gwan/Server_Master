@@ -47,8 +47,7 @@ class Recognizer():
         # 군집화나 RNN으로 분석해서 리턴시켜야됨
         result = self.classifier.classifier(text)
         # {real_txt : class key}
-        return result
-    
+        return result    
 
 
     ## 분석기

@@ -21,7 +21,7 @@ class MainFunction():
         try:
             result = self.recognizer.recognizer(txt)
         except Exception as e:
-            print("ERROR : ", e)
+            print("ERROR_main : ", e)
             result = {'key' : "ERROR" }
             self.status == -1
             self()
