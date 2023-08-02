@@ -13,15 +13,15 @@ class AppServer():
 
     def register_routes(self):
         #wav 데이터 받기
-        @self.app.post('/get_wav')
-        async def recog_voice(file: UploadFile = File(..., required = False)):
-            if file is None:
-                print('wav file did not uploaded')
-                return {"error": "No file provided"}
+        @self.app.post('/get_string')
+        async def recog_voice(data : dict):
+            if data is None:
+                print('data did not uploaded')
+                return {"key": "ERROR"} 
             else:
-                print('wav file upload complete')
+                print('json loaded')
             try:
-                result = self.mainfunction.recog_wav(file)
+                result = self.mainfunction.recog_wav(data['txt'])
             except Exception as e:
                 print("Error : ", str(e))
 
