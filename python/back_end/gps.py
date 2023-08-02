@@ -1,7 +1,7 @@
 import requests
 from urllib.parse import urlparse
 import json
-import constant 
+import back_end
 
 class GPS():   
     def __init__(self, lat, lon):
@@ -17,7 +17,7 @@ class GPS():
         lon = self.__gps_location() #gps 위치 받은거 경도 위도 잘라서 넣어주기
         lat = 0
         url = f"https://dapi.kakao.com/v2/local/geo/coord2address.json?x={lon}&y={lat}"
-        result = requests.get(urlparse(url).geturl(), headers=constant.kakao_headers).json()        
+        result = requests.get(urlparse(url).geturl(), headers=back_end.constant.kakao_headers).json()        
         return result
 
     def __location_name(self): #받아온 json 데이터에서 건물 이름을 뽑아냄

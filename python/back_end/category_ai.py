@@ -4,7 +4,11 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import tensorflow as tf
 import json
-from PROCESS import MODEL_FILE, LABEL_FILE, AAC_FILE
+#from back_end import MODEL_FILE, LABEL_FILE, AAC_FILE
+
+LABEL_FILE = './label_data.txt'
+MODEL_FILE = './model/'
+AAC_FILE = './json_data_edit.json'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 warnings.simplefilter(action='ignore', category=FutureWarning) # FutureWarning 제거
@@ -19,7 +23,7 @@ class Classifier():
 
     # get labels
     def __get_labels(self):
-        with open(LABEL_FILE, 'r', encoding='UTF-8') as f:
+        with open(LABEL_FILE, 'r', encoding='cp949') as f:
             self.labels = json.load(f)
 
     # model
@@ -46,7 +50,7 @@ class Classifier():
     # load aac_category
     def __get_aac_category(self):
         self.aac_category = []
-        with open(AAC_FILE, 'r', encoding='UTF-8') as f:
+        with open(AAC_FILE, 'r', encoding='UTF8') as f:
             raw_aac = json.load(f)
         for AAC_NAME in raw_aac['AAC']:
             self.aac_category.append(AAC_NAME['name'])

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 #from fastapi.responses import FileResponse
 from fastapi import UploadFile, File
-from constant import GPS
+import WAS
 import uvicorn
 #from constant import WAV_SAVE_PATH
 
@@ -33,7 +33,7 @@ class AppServer():
 
         #GPS 데이터 보내기
         @self.app.post('/get_gps')
-        async def recog_GPS(data : GPS):
+        async def recog_GPS(data : WAS.GPS):
             if data is None:
                 print('gps not uploaded')
                 return {"error": "data did not usable"}
