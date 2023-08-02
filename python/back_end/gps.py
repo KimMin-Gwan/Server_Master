@@ -42,19 +42,23 @@ class GPS():
 
         url = url_base + keyword + url_middle + number
         if(name == "error not found"):
-            err = "failled to find bd use"
-            return err
+            result_json = {'category': 'default'}
+            return result_json
 
         
         result = requests.get(url,headers = naver_headers).json()
         try:
             #BdUse = json.dumps(result['items'][0]["category"],indent=4,ensure_ascii=False)
             BdUse = result['items'][0].pop('category', None)
-            data = BdUse.split('>')
-            result_json = {'category': data[1]}
+            data_first = BdUse.split('>')
+            data_second = data_first[1].split(',')
+            if(len(data_second)== 1):
+                result_json = {'category': data_second[0]}
+            elif(len(data_second)== 2):
+                result_json = {'category': data_second[1]}
 
             return result_json
         except:
-            err = "data not found"
-            return err
+            result_json = {'category': 'default'}
+            return result_json
         
