@@ -47,9 +47,14 @@ class GPS():
 
         
         result = requests.get(url,headers = naver_headers).json()
-        #BdUse = json.dumps(result['items'][0]["category"],indent=4,ensure_ascii=False)
-        BdUse = result['items'][0].pop('category', None)
-        data = BdUse.split('>')
-        result_json = {'category': data[1]}
+        try:
+            #BdUse = json.dumps(result['items'][0]["category"],indent=4,ensure_ascii=False)
+            BdUse = result['items'][0].pop('category', None)
+            data = BdUse.split('>')
+            result_json = {'category': data[1]}
 
-        return data #가?끔 건물이름이 ""로 들어와서 제대로 작동 안하긴함
+            return result_json
+        except:
+            err = "data not found"
+            return err
+        
