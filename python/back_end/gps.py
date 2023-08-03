@@ -41,7 +41,7 @@ class GPS():
             result_json = {'category': 'default'}
             return result_json
 
-        with open ("json_data_test.json", "r") as f:
+        with open ("json_data_test.json", "r", encoding='cp949') as f:
                 saved_data = json.load(f)
         
         result = requests.get(url,headers = back_end.constant.naver_headers).json()
