@@ -48,10 +48,30 @@ class GPS():
             BdUse = result['items'][0].pop('category', None)
             data_first = BdUse.split('>')
             data_second = data_first[1].split(',')
+
+            with open ("json_data_edit", "r") as f:
+                saved_data = json.load(f)
+
+            for i in saved_data["AAC"]:
+                if(i["name"]==data_second):
+                    data = data_second
+
+
+
             if(len(data_second)== 1):
-                result_json = {'category': data_second[0]}
+                try:
+                    for i in saved_data["AAC"]:
+                        if(i["name"]==data_second[0]):
+                            result_json = {'category': data_second[0]}
+                except:
+                    result_json = {'category': 'default'}
             elif(len(data_second)== 2):
-                result_json = {'category': data_second[1]}
+                try:
+                    for i in saved_data["AAC"]:
+                        if(i["name"]==data_second[1]):
+                            result_json = {'category': data_second[1]}
+                except:
+                    result_json = {'category': 'default'}
 
             return result_json
         except:
