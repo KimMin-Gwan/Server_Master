@@ -32,13 +32,14 @@ class MainFunction():
 
     def recog_gps(self, x, y):
         self.status = 1
+        self.gps = back_end.GPS(x,y)
         self()
 
         #---------------
         #분석기 생성
-        recognizer = back_end.GPS(x, y)
+        #recognizer = back_end.GPS(x, y)
         # 분석
-        result = recognizer.gps_analyzer()
+        result = self.gps.gps_analyzer()
         # 분석기 메모리 반환 
         recognizer = None
 

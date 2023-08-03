@@ -1,5 +1,5 @@
-kakao_headers={"Authorization": "KakaoAK ___________________"}
-naver_headers = {'X-Naver-Client-Id':"___________________", 'X-Naver-Client-Secret':"__________________"}
+kakao_headers={"Authorization": "KakaoAK 468b7fd043830d2a5ddb6fff0a000b5b"}
+naver_headers = {'X-Naver-Client-Id':"U_JVe8czFTPTdfOU_7Fs", 'X-Naver-Client-Secret':"ZBiUd0rclE"}
 
 LABEL_FILE = './label_data.txt'
 MODEL_FILE = './model/'

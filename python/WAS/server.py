@@ -33,20 +33,22 @@ class AppServer():
 
         #GPS 데이터 보내기
         @self.app.post('/get_gps')
-        async def recog_GPS(data : WAS.GPS):
+        async def recog_GPS(data : dict):
             if data is None:
                 print('gps not uploaded')
                 return {"error": "data did not usable"}
 
-            x = int(data.x)
-            y = int(data.y)
+            x = data['x']
+            y = data['y']
+            #print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx:", x)
+            #print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy:", y)
             # result:str
             try:
                 result = self.mainfunction.recog_gps(x, y)
             except Exception as e:
                 print("Erro : ", str(e))
 
-            return {"Category": result}
+            return result
         
     def run_server(self, HOST, PORT):
         uvicorn.run(self.app, host=HOST, port= PORT)

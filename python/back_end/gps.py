@@ -4,25 +4,20 @@ import json
 import back_end
 
 class GPS():   
-    def __init__(self, lat, lon):
-        self.lat = lat
-        self.lon = lon
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
-    def __gps_location(self):
-        #안드로이드 애플리케이션에서 gps 데이틀 받아옴
-        return 0
 
     def __get_location(self):
         #gps 경도 위도로 현재 위치의 정보 받기
-        lon = self.__gps_location() #gps 위치 받은거 경도 위도 잘라서 넣어주기
-        lat = 0
-        url = f"https://dapi.kakao.com/v2/local/geo/coord2address.json?x={lon}&y={lat}"
+        url = f"https://dapi.kakao.com/v2/local/geo/coord2address.json?x={self.y}&y={self.x}"
         result = requests.get(urlparse(url).geturl(), headers=back_end.constant.kakao_headers).json()        
         return result
 
     def __location_name(self): #받아온 json 데이터에서 건물 이름을 뽑아냄
         try:
-            data = json.dumps(self.__where_am_i()['documents'][0]["road_address"]["building_name"],
+            data = json.dumps(self.__get_location()['documents'][0]["road_address"]["building_name"],
                               indent=4,ensure_ascii=False)
             return data
         
@@ -33,7 +28,8 @@ class GPS():
 
     def gps_analyzer(self):
         #건물 이름으로 얻은 데이터 분석해서 장소 라벨 보내주기 ex)식당, 병원, 약국, 학교
-        headers = {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret':client_secret}
+        headers = back_end.constant.naver_headers
+        #headers = {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret':client_secret}
 
         url_base="https://openapi.naver.com/v1/search/local.json?query="
         keyword = self.__location_name()
@@ -41,12 +37,12 @@ class GPS():
         number='1'
 
         url = url_base + keyword + url_middle + number
-        if(name == "error not found"):
-            result_json = {'category': 'default'}
+        if(keyword == "error not found"):
+            result_json = {'category': 'default name null'}
             return result_json
 
         
-        result = requests.get(url,headers = naver_headers).json()
+        result = requests.get(url,headers = back_end.constant.naver_headers).json()
         try:
             #BdUse = json.dumps(result['items'][0]["category"],indent=4,ensure_ascii=False)
             BdUse = result['items'][0].pop('category', None)
@@ -59,6 +55,6 @@ class GPS():
 
             return result_json
         except:
-            result_json = {'category': 'default'}
+            result_json = {'category': 'default faill to get'}
             return result_json
         
