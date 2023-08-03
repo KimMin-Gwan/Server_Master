@@ -41,6 +41,8 @@ class GPS():
             result_json = {'category': 'default'}
             return result_json
 
+        with open ("json_data_test.json", "r") as f:
+                saved_data = json.load(f)
         
         result = requests.get(url,headers = back_end.constant.naver_headers).json()
         try:
@@ -48,9 +50,6 @@ class GPS():
             BdUse = result['items'][0].pop('category', None)
             data_first = BdUse.split('>')
             data_second = data_first[1].split(',')
-
-            with open ("json_data_edit", "r") as f:
-                saved_data = json.load(f)
 
             for i in saved_data["AAC"]:
                 if(i["name"]==data_second):
