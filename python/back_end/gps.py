@@ -38,7 +38,7 @@ class GPS():
 
         url = url_base + keyword + url_middle + number
         if(keyword == "error not found"):
-            result_json = {'category': 'default name null'}
+            result_json = {'category': 'default'}
             return result_json
 
         
@@ -55,6 +55,6 @@ class GPS():
 
             return result_json
         except:
-            result_json = {'category': 'default faill to get'}
+            result_json = {'category': 'default'}
             return result_json
         
