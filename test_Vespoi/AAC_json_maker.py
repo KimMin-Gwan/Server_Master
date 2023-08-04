@@ -434,6 +434,9 @@ def main():
     node_list = ['필요해요','필요없어요']
     node_add_multi(dict_aac, id_finder(dict_aac,"현금영수증발급문의"), id_finder_multi(dict_aac,node_list))
 
+    node_list = ['필요해요','필요없어요']
+    node_add_multi(dict_aac, id_finder(dict_aac,"현금영수증요청"), id_finder_multi(dict_aac,node_list))
+
     make_json(dict_aac)
     
 
