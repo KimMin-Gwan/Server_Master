@@ -2,7 +2,7 @@ import re
 import json
 
 
-def preprocessing_text_data(file_path): #txt 파일 텍스트 정리
+def preprocessing_text_data(file_path): #txt 파일 텍스트 정리 /로 구분
     file = open(file_path, encoding='UTF8')
 
     data = file.read()
@@ -18,7 +18,7 @@ def preprocessing_text_data(file_path): #txt 파일 텍스트 정리
     
     return list(set(text_data))
 
-def preprocessing_text_data_dot(file_path): #txt 파일 텍스트 정리
+def preprocessing_text_data_dot(file_path): #txt 파일 텍스트 정리 ,으로 구분
     file = open(file_path, encoding='UTF8')
 
     data = file.read()
@@ -31,6 +31,38 @@ def preprocessing_text_data_dot(file_path): #txt 파일 텍스트 정리
         new_str = new_str.replace(" ", "")
         #print(new_str)
         text_data.append(new_str)
+    
+    return list(set(text_data))
+
+def preprocessing_text_data_ai(file_path): #ai txt 파일에 사용
+    file = open(file_path, encoding='UTF8')
+
+    data = file.read()
+
+    split_data = data.split(',')
+
+    text_data = []
+    for i in split_data:
+        new_str = re.sub(r"[^\uAC00-\uD7A3a-zA-Z\s]", "", i)
+        new_str = new_str.replace(" ", "")
+        #print(new_str)
+        text_data.append(new_str)
+    
+    return list(set(text_data))
+
+def preprocessing_text_data_category(file_path): #카테고리 txt 파일에 사용
+    file = open(file_path, encoding='UTF8')
+
+    data = file.read()
+
+    split_data = data.split('/')
+
+    text_data = []
+    for i in split_data:
+        new_str = re.sub(r"[^\uAC00-\uD7A3a-zA-Z\s0-9]", "", i)
+        new_str = new_str.replace(" ", "")
+        #print(new_str)
+        text_data.append(new_str+":")
     
     return list(set(text_data))
 
@@ -70,7 +102,7 @@ def add_txt_dict_category(dict_aac,PATH): #텍스트 파일로 딕셔너리 만�
         if str(i["id"])[:2] == "20":
             index = int(str(i["id"])[2:])
 
-    aac_data = preprocessing_text_data(PATH)
+    aac_data = preprocessing_text_data_category(PATH)
     for i in aac_data:
         index = index + 1
         dict_aac["AAC"].append({
@@ -118,7 +150,7 @@ def add_txt_dict_ai(dict_aac,PATH): #텍스트 파일로 딕셔너리 만들기 
         if str(i["id"])[:2] == "90":
             index = int(str(i["id"])[2:])
 
-    aac_data = preprocessing_text_data_dot(PATH)
+    aac_data = preprocessing_text_data_ai(PATH)
     for i in aac_data:  
         index = index + 1
         dict_aac["AAC"].append({
