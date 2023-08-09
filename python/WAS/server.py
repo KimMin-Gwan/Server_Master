@@ -40,15 +40,47 @@ class AppServer():
 
             x = data['x']
             y = data['y']
-            #print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx:", x)
-            #print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy:", y)
-            # result:str
+
             try:
                 result = self.mainfunction.recog_gps(x, y)
             except Exception as e:
                 print("Erro : ", str(e))
 
             return result
+
+        @self.app.post('/login')
+        async def login(data : dict):
+            if data is None:
+                print('login data none')
+                return {"message":"login failed","status": HTTPStatus.OK}
+            
+            phone = data['phone']
+            pw = data['password']
+            
+            try:
+                result = self.mainfunction.login_req(phone, pw)
+            except Exception as e:
+                print("Error : ", str(e))
+
+            return result
+
+        @self.app.post('/register')
+        async def register(data : dict):
+            if data is None:
+                print('register data none')
+                return {"message":"register failed","status": HTTPStatus.OK}
+
+            name = data['name']
+            phone = data['phone']
+            pw = data['password']
+            
+            try:
+                result = self.mainfunction.register_req(name, phone, pw)
+            except Exception as e:
+                print("Error : ", str(e))
+
+            return result
+
         
     def run_server(self, HOST, PORT):
         uvicorn.run(self.app, host=HOST, port= PORT)

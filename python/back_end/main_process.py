@@ -47,4 +47,29 @@ class MainFunction():
         self()
         return result
 
+    def login_req(self, phone, pw):
+        self.status = 1
+        self.login = back_end.Login(phone, pw)
+        self()
+
+        result = self.login.login()
+
+        self.status = 0
+        self()
+        return result
+
+    def register_req(self, name, phone, pw):
+        self.status = 1
+        self.register = back_end.Register(name, phone, pw)
+        self()
+
+        result = self.register.register()
+
+
+        self.status = 0
+        self()
+        
+        return result
+
+
 
