@@ -52,7 +52,7 @@ class AppServer():
         async def login(data : dict):
             if data is None:
                 print('login data none')
-                return {"message":"login failed","status": HTTPStatus.OK}
+                return {"message":"login failed"} #,"status": HTTPStatus.OK
             
             phone = data['phone']
             pw = data['password']
@@ -68,7 +68,7 @@ class AppServer():
         async def register(data : dict):
             if data is None:
                 print('register data none')
-                return {"message":"register failed","status": HTTPStatus.OK}
+                return {"message":"register failed"} #,"status": HTTPStatus.OK
 
             name = data['name']
             phone = data['phone']
