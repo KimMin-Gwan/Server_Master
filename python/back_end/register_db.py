@@ -11,19 +11,22 @@ class Register():
         self.phone = phone
         self.pw = pw
 
-    def __check_dupe(self):
+    def __check_valid(self):
         mongo_connect = back_end.constant.mongo_key
         client = MongoClient(mongo_connect, tlsCAFile=certifi.where())
         db = client.temp
 
         try: 
             db_data = list(db.account.find({'phone':{'$regex': self.phone}}))
-            if not db_data:
-                return False #리스트가 비어있음 ( 데이터 없음 )
+           
+            if(len(self.phone)!=11):
+                return False #아래랑 상관은 없지만 전화번호 길이가 잘못됨
+            elif not db_data:
+                return True #리스트가 비어있음 ( 데이터 없음 )
             else:
-                return True #리스트에 정보가 있음
+                return False #리스트에 정보가 있음
         except: 
-            return False # 못찾음
+            return True # 못찾음
 
     def register(self):
         #db 연결
@@ -39,10 +42,10 @@ class Register():
             }
         
         #중복확인
-        check_reg = self.__check_dupe()
+        check_reg = self.__check_valid()
 
-        if(check_reg==True): #이미 있으면 실패
-            response = {"message":"register failed phone already exists"}
+        if(check_reg==False): #이미 있거나 전화번호 길이가 잘못됨
+            response = {"message":"register failed phone already exists or invalid number"}
             return response
         
         else:
@@ -54,8 +57,5 @@ class Register():
             except: #없지만 뭔가 문제가 생김 (잘못된? 데이터)
                 response = {"message":"register failed"} #,"status": HTTPStatus.OK
                 return response
-        #몰?루
-        response = {"message":"unknown error"}
-        return response
         
         
