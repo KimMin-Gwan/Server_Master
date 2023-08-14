@@ -35,11 +35,15 @@ class Register():
         db = client.temp
 
         #db에 넘길 데이터
-        data={
+        user_account_info={
             'name': self.name,
             'phone': self.phone,
             'pw': self.pw
             }
+        user_data={
+            'phone': self.phone,
+            'fav': []
+        }
         
         #중복확인
         check_reg = self.__check_valid()
@@ -50,7 +54,8 @@ class Register():
         
         else:
             try: #없으면 추가
-                db.account.insert_one(data)
+                db.account.insert_one(user_account_info)
+                db.user_data.insert_one(user_data)
                 response = {"message":"register success"} #,"status": HTTPStatus.OK
                 return response
 
