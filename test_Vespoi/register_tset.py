@@ -4,7 +4,7 @@ import json
 from pymongo import MongoClient
 import certifi
 
-phone = '01010012002'
+phone = '01088889999'
 def check_dupe():
     mongo_connect = "mongodb+srv://admin:r3tgCfkESORu8iO4@cluster0.pmbm4ny.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(mongo_connect, tlsCAFile=certifi.where())
@@ -29,10 +29,14 @@ def check_dupe():
 mongo_connect = "mongodb+srv://admin:r3tgCfkESORu8iO4@cluster0.pmbm4ny.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(mongo_connect, tlsCAFile=certifi.where())
 db = client.temp
-data={
-    'name': 'localdutetest',
+user_account_info={
+    'name': 'LocalData',
     'phone': phone,
     'pw': 'test1234'
+}
+user_data={
+    'phone': phone,
+    'fav': []
 }
 
 check_reg = check_dupe()
@@ -43,7 +47,8 @@ if(check_reg==True):
 
 else:
     try:
-        db.account.insert_one(data)
+        db.account.insert_one(user_account_info)
+        db.user_data.insert_one(user_data)
         response = {"message":"register success"}
         print( response)
 
