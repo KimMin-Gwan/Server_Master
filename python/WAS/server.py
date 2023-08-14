@@ -81,6 +81,37 @@ class AppServer():
 
             return result
 
+        @self.app.post('/update_fav')
+        async def register(data : dict):
+            if data is None:
+                print('fav data none')
+                return {"message":"update data failed"} 
+
+            phone = data['phone']
+            fav_data = data['fav']
+            
+            try:
+                result = self.mainfunction.update_user_fav_data(phone, fav_data)
+            except Exception as e:
+                print("Error : ", str(e))
+
+            return result
+
+        @self.app.post('/get_fav')
+        async def register(data : dict):
+            if data is None:
+                print('fav data none')
+                return {"message":"load data failed"} #,"status": HTTPStatus.OK
+
+            phone = data['phone']
+            
+            try:
+                result = self.mainfunction.get_user_fav_data(phone)
+            except Exception as e:
+                print("Error : ", str(e))
+
+            return result
+
         
     def run_server(self, HOST, PORT):
         uvicorn.run(self.app, host=HOST, port= PORT)

@@ -70,6 +70,32 @@ class MainFunction():
         self()
         
         return result
+    
+    def update_user_fav_data(self, phone, fav_data):
+        self.status = 1
+        self.update_fav = back_end.UpdateFav(phone, fav_data)
+        self()
+
+        result = self.update_fav.update_fav()
+
+
+        self.status = 0
+        self()
+        
+        return result
+    
+    def get_user_fav_data(self,phone):
+        self.status = 1
+        self.get_fav = back_end.GetFav(phone)
+        self()
+
+        result = self.get_fav.get_fav()
+
+
+        self.status = 0
+        self()
+        
+        return result
 
 
 
