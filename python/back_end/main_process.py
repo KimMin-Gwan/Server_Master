@@ -47,44 +47,44 @@ class MainFunction():
         self()
         return result
 
-    def login_req(self, phone, pw):
-        self.status = 1
-        self.login = back_end.Login(phone, pw)
-        self()
+    # def login_req(self, phone, pw):
+    #     self.status = 1
+    #     self.login = back_end.Login(phone, pw)
+    #     self()
 
-        result = self.login.login()
+    #     result = self.login.login()
 
-        self.status = 0
-        self()
-        return result
+    #     self.status = 0
+    #     self()
+    #     return result
 
-    def register_req(self, name, phone, pw):
-        self.status = 1
-        self.register = back_end.Register(name, phone, pw)
-        self()
+    # def register_req(self, name, phone, pw):
+    #     self.status = 1
+    #     self.register = back_end.Register(name, phone, pw)
+    #     self()
 
-        result = self.register.register()
+    #     result = self.register.register()
 
 
-        self.status = 0
-        self()
+    #     self.status = 0
+    #     self()
         
-        return result
+    #     return result
     
-    def update_user_fav_data(self, phone, fav_data):
-        self.status = 1
-        self.update_fav = back_end.UpdateFav(phone, fav_data)
-        self()
+    # def update_user_fav_data(self, phone, fav_data):
+    #     self.status = 1
+    #     self.update_fav = back_end.UpdateFav(phone, fav_data)
+    #     self()
 
-        result = self.update_fav.update_fav()
+    #     result = self.update_fav.update_fav()
 
 
-        self.status = 0
-        self()
+    #     self.status = 0
+    #     self()
         
-        return result
+    #     return result
     
-    def get_user_fav_data(self,phone):
+    # def get_user_fav_data(self,phone):
         self.status = 1
         self.get_fav = back_end.GetFav(phone)
         self()
