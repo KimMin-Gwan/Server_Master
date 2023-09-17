@@ -9,7 +9,7 @@ class GPS():
         self.y = x
 
 
-    def __get_location_name(self):
+    def __get_location_name(self): #이건됨
         #gps 경도 위도로 현재 위치의 정보 받기
         name_list = []
         payload = {
@@ -37,7 +37,7 @@ class GPS():
         except:
             return 'default'
 
-    def __get_location_biz_name(self):
+    def __get_location_biz_name(self): #이게안됨 여러개 말고 단일로 하나만 보내봐야 할듯
         #건물 이름으로 얻은 데이터 분석해서 장소 보내주기 
         biz_name_list = []      
         page = 1   #Number	선택	조회할 목록의 페이지를 지정합니다.
