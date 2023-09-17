@@ -12,7 +12,7 @@ def preprocessing_text_data(file_path): #txt 파일 텍스트 정리 /로 구분
     text_data = []
     for i in split_data:
         new_str = re.sub(r"[^\uAC00-\uD7A3a-zA-Z\s0-9]", "", i)
-        new_str = new_str.replace(" ", "")
+        #new_str = new_str.replace(" ", "")
         #print(new_str)
         text_data.append(new_str)
     
@@ -63,6 +63,22 @@ def preprocessing_text_data_category(file_path): #카테고리 txt 파일에 사
         new_str = new_str.replace(" ", "")
         #print(new_str)
         text_data.append(new_str+":")
+    
+    return list(set(text_data))
+
+def preprocessing_text_data_urgency(file_path): #긴급 txt 파일에 사용
+    file = open(file_path, encoding='UTF8')
+
+    data = file.read()
+
+    split_data = data.split(',')
+
+    text_data = []
+    for i in split_data:
+        new_str = re.sub(r"[^\uAC00-\uD7A3a-zA-Z\s0-9/]", "", i)
+        #new_str = new_str.replace(" ", "")
+        #print(new_str)
+        text_data.append(new_str)
     
     return list(set(text_data))
 
@@ -143,6 +159,22 @@ def add_txt_dict_AAC(dict_aac,PATH): #텍스트 파일로 딕셔너리 만들기
             "name" : i
         })
 
+def add_txt_dict_urgency(dict_aac,PATH): #텍스트 파일로 딕셔너리 만들기 - 긴급 카테고리
+    urgency_label = "50" #긴급 카테고리
+    index = 0
+    for i in dict_aac["AAC"]:
+        if str(i["id"])[:2] == "50":
+            index = int(str(i["id"])[2:])
+
+    aac_data = preprocessing_text_data_urgency(PATH)
+    for i in aac_data:  
+        index = index + 1
+        dict_aac["AAC"].append({
+            "id": int(urgency_label + str(index)),
+            "node" : [],
+            "name" : i
+        })
+
 def add_txt_dict_ai(dict_aac,PATH): #텍스트 파일로 딕셔너리 만들기 - AI 카테고리
     ai_label = "90" #AI 카테고리
     index = 0
@@ -160,6 +192,8 @@ def add_txt_dict_ai(dict_aac,PATH): #텍스트 파일로 딕셔너리 만들기 
         })
         #print(i)
     #print(dict_data)
+
+
 
 def add_single_dict_location(dict_aac,name): #장소 추가
     location_label="10" #장소
@@ -281,6 +315,7 @@ def main():
     add_txt_dict_flow(dict_aac, "카테고리/test_flow.txt")   
     add_txt_dict_AAC(dict_aac, "카테고리/test_aac.txt")
     add_txt_dict_ai(dict_aac, "카테고리/category.txt")
+    add_txt_dict_urgency(dict_aac, "카테고리/urgency.txt")
 
     node_list=["주문:", "요청카페:", "계산요청:"]
     node_add_multi(dict_aac, id_finder(dict_aac,"카페"), id_finder_multi(dict_aac,node_list))
@@ -436,6 +471,18 @@ def main():
 
     node_list = ['필요해요','필요없어요']
     node_add_multi(dict_aac, id_finder(dict_aac,"현금영수증요청"), id_finder_multi(dict_aac,node_list))
+
+    node_list=["응급 상황입니다", "심한 통증이 있습니다", "숨쉬기가 어렵습니다","피가 나고 있어요","기절할 것 같아요","곧 출산할 것 같아요","뼈가 부러진 것 같아요","배가 너무 아파요","머리가 너무 아파요"]
+    node_add_multi(dict_aac, id_finder(dict_aac,"의료 상황"), id_finder_multi(dict_aac,node_list))
+
+    node_list=['도와주세요','위험해요','불이야','도둑입니다','사고가 났어요','누군가 저를 따라옵니다','물이 넘쳐요','전기가 튀어요']
+    node_add_multi(dict_aac, id_finder(dict_aac,"안전/위험 상황"), id_finder_multi(dict_aac,node_list))
+    
+    node_list=['길을 잃었어요','집으로 돌아가고 싶어요','경찰서로 가고 싶어요','병원으로 가고 싶어요','여기가 어디에요','버스 정류장은 어디에요','지하철 역은 어디에요','택시를 불러주세요']
+    node_add_multi(dict_aac, id_finder(dict_aac,"위치/길 잃음"), id_finder_multi(dict_aac,node_list))
+
+    node_list=['전화해주세요','119 불러주세요','112 불러주세요','가족에게 연락해주세요','물을 마시고 싶어요','화장실을 가고 싶어요','돈을 잃어버렸어요','성폭행을 당했어요']
+    node_add_multi(dict_aac, id_finder(dict_aac,"기타 긴급 상황"), id_finder_multi(dict_aac,node_list))
 
     make_json(dict_aac)
     
