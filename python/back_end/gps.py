@@ -5,8 +5,8 @@ import back_end
 
 class GPS():   
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        self.x = y
+        self.y = x
 
 
     def __get_location_name(self):
@@ -24,7 +24,7 @@ class GPS():
             "count" : "10", #페이지당 출력되는 개수를 지정합니다.
             "radius" : "0.1", #km 단위 검색 반경.
             "searchType" : "nearby", # keyword - 일반 키워드 검색 / category - 카테고리검색 (키워드 없음) / nearby - 근처검색( 키워드 없음)
-            "lineString" : self.x +',' + self.y  +'_' + self.x + ',' + self.y
+            "lineString" : f'{self.x},{self.y}_{self.x},{self.y}'
         }
 
         try:

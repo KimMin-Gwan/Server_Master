@@ -42,7 +42,7 @@ def get_biz_name():
   page = 1   #Number	선택	조회할 목록의 페이지를 지정합니다.
   count = 3	    #Number	선택	페이지당 출력되는 개수를 지정합니다.
   searchKeyword ="영남대학교 이희건기념관"	    #String 필수	 전화번호 검색(searchType=telno) 명칭 검색(searchType=name)
-  appKey = '___________'
+  appKey = 'yhLi5Qckdv40Vid4Z6ncz5Npq1wTSyce6RnHCkDB'
 
   url = f'https://apis.openapi.sk.com/tmap/pois?version={version}&page={page}&count={count}&searchKeyword={searchKeyword}&appKey={appKey}'
 
@@ -50,11 +50,12 @@ def get_biz_name():
   print(json.dumps(result["searchPoiInfo"]['pois']['poi'][0]['lowerBizName'],indent=4,ensure_ascii=False))
 
 def get_name():
+  name_list = []
   version = 1
-  y = '35.832704'
-  x = '128.735329'
-  appKey = '________'
-  lineString = x +',' + y  +'_' + x + ',' + y
+  y = 35.832704
+  x = 128.735329
+  appKey = 'yhLi5Qckdv40Vid4Z6ncz5Npq1wTSyce6RnHCkDB'
+  lineString = f'{x},{y}_{x},{y}'
   payload = {
     "startX" : x, #출발지 X좌표입니다.
     "startY" : y, #출발지 Y좌표입니다.
@@ -75,7 +76,9 @@ def get_name():
 
   result = requests.post(url, json = payload).json()
   for i in result["searchPoiInfo"]['pois']['poi']:
-    print(json.dumps(i['name'],indent=4,ensure_ascii=False))
+    name_list.append(json.dumps(i['name'],ensure_ascii=False))
+  return name_list
   
 
-get_biz_name()
+name_list = get_name()
+print(name_list)
