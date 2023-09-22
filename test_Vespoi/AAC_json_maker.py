@@ -283,10 +283,13 @@ def make_json_urgency(dict_data): #json 저장
 
 
 def main():
-    path = 'C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/json_data_test.json'
+    path = 'C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/json/json_data_230922.json'
     dict_aac = open_json(path)
     dict_aac = dupe_node_remover(dict_aac)
-    #print((json.dumps(dict_aac, indent='\t',ensure_ascii=False)))
+    
+    test_list = []
+    test_list = ('과자/라면/삼각김밥/빵/젤리/생필품/음료수/술/복권/담배').split('/')
+    node_add_multi(dict_aac,203,id_finder_multi(dict_aac,test_list))
     make_json(dict_aac)
 
 if __name__ == "__main__":
