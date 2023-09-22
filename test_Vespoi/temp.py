@@ -1,5 +1,5 @@
 # #버린 코드 저장소
-def fold:  #이러면 코드가 접히지
+def fold_aac_add:  #이러면 코드가 접히지
     dict_urgency_aac ={"AAC":[]}
     add_txt_dict_location(dict_aac, "카테고리/test_location.txt")
     add_txt_dict_category(dict_aac,"카테고리/test_category.txt")
@@ -175,3 +175,17 @@ def fold:  #이러면 코드가 접히지
 
     node_list=['전화해주세요','119 불러주세요','112 불러주세요','가족에게 연락해주세요','물을 마시고 싶어요','화장실을 가고 싶어요','돈을 잃어버렸어요','성폭행을 당했어요']
     node_add_multi(dict_urgency_aac, id_finder(dict_urgency_aac,"기타 긴급 상황"), id_finder_multi(dict_urgency_aac,node_list))
+
+def fold_acc_adder:
+    def add_single_dict_location(dict_aac,name): #장소 추가
+    location_label="10" #장소
+    index = 0
+    for i in dict_aac["AAC"]:
+        if str(i["id"])[:2] == "10":
+            index = int(str(i["id"])[2:])
+
+    index = index + 1
+    dict_aac["AAC"].append({
+        "id": int(location_label + str(index)),
+        "name" : name
+    })
