@@ -38,8 +38,8 @@ class AppServer():
                 print('gps not uploaded')
                 return {"error": "data did not usable"}
 
-            x = data['x']
-            y = data['y']
+            x = float(data['x'])
+            y = float(data['y'])
 
             try:
                 result = self.mainfunction.recog_gps(x, y)
