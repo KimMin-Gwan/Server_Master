@@ -6,4 +6,4 @@ mongo_key = "mongodb+srv://admin:r3tgCfkESORu8iO4@cluster0.pmbm4ny.mongodb.net/?
 
 LABEL_FILE = './label_data.txt'
 MODEL_FILE = './model/'
-AAC_FILE = './json_data_test.json'
+AAC_FILE = './json_data_230924.json'
