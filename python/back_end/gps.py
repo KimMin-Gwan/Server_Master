@@ -81,6 +81,8 @@ class GPS():
             # data_temp = BdUse.split('>')
             # data= data_temp.split(',')
             data = BdUse.split('>')
+            data = data[0].split(',')
+            data = data[0]
             # for i in saved_data["AAC"]:
             #     if(i["name"]==data[-1]):
             #         result_json = {'category': data[-1]}
