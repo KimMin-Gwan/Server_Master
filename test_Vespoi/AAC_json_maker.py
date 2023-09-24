@@ -206,6 +206,37 @@ def add_txt_dict_urgency_aac(dict_urgency_aac,PATH): #텍스트 파일로 딕셔
             "name" : i
         })
 
+def add_txt_dict_ai_response(dict_aac,PATH): #텍스트 파일로 딕셔너리 만들기 - AI 응답
+    ai_res_label = "80" #AI response 카테고리
+    index = 0
+    for i in dict_aac["AAC"]:
+        if str(i["id"])[:2] == "80":
+            index = int(str(i["id"])[2:])
+
+    aac_data = preprocessing_text_data_with_space(PATH)
+    for i in aac_data:  
+        index = index + 1
+        dict_aac["AAC"].append({
+            "id": int(ai_res_label + str(index)),
+            "node" : [],
+            "name" : i
+        })
+
+def add_list_dict_ai_response(dict_aac,dict_ai_res): #텍스트 파일로 딕셔너리 만들기 - AI 응답
+    ai_res_label = "80" #AI response 카테고리
+    index = 0
+    for i in dict_aac["AAC"]:
+        if str(i["id"])[:2] == "80":
+            index = int(str(i["id"])[2:])
+
+    for i in dict_ai_res['intence']:  
+        for j in i['response']:
+            index = index + 1
+            dict_aac["AAC"].append({
+                "id": int(ai_res_label + str(index)),
+                "node" : [],
+                "name" : j
+            })
 
 def add_txt_dict_ai(dict_aac,PATH): #텍스트 파일로 딕셔너리 만들기 - AI 카테고리
     ai_label = "90" #AI 카테고리
@@ -221,6 +252,23 @@ def add_txt_dict_ai(dict_aac,PATH): #텍스트 파일로 딕셔너리 만들기 
             "id": int(ai_label + str(index)),
             "node" : [],
             "name" : i
+        })
+        #print(i)
+    #print(dict_data)
+
+def add_list_dict_ai(dict_aac,dict_ai_res): #텍스트 파일로 딕셔너리 만들기 - AI 카테고리
+    ai_label = "90" #AI 카테고리
+    index = 0
+    for i in dict_aac["AAC"]:
+        if str(i["id"])[:2] == "90":
+            index = int(str(i["id"])[2:])
+
+    for i in dict_ai_res['intence']:  
+        index = index + 1
+        dict_aac["AAC"].append({
+            "id": int(ai_label + str(index)),
+            "node" : [],
+            "name" : i['tag']
         })
         #print(i)
     #print(dict_data)
@@ -266,13 +314,13 @@ def dupe_node_remover(dict_data):
     return dict_data
 
 def open_json(PATH): #json 불러오기
-    with open (PATH, "r") as f:
+    with open (PATH, "r",encoding='utf-8') as f:
         dict_data = json.load(f)
     return dict_data
 
-def make_json(dict_data): #json 저장
+def make_json(dict_data,path): #json 저장
     json_data = json.dumps(dict_data, indent="\t", ensure_ascii=False)
-    with open('json_data_230922.json', 'w', encoding='euc-kr') as f:
+    with open(path.split('/')[-1], 'w', encoding='utf-8') as f:
         f.write(json_data)
 
 def make_json_urgency(dict_data): #json 저장
@@ -283,18 +331,35 @@ def make_json_urgency(dict_data): #json 저장
 
 
 def main():
-    path = 'C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/json/json_data_230922.json'
-    dict_aac = open_json(path)
-    dict_aac = dupe_node_remover(dict_aac)
-    
-    test_list = []
-    test_list = ('과자/라면/삼각김밥/빵/젤리/생필품/음료수/술/복권/담배').split('/')
-    node_add_multi(dict_aac,203,id_finder_multi(dict_aac,test_list))
-    make_json(dict_aac)
+    path = 'C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/json/json_data_230924.json'
+    with open (path, "r",encoding='euc-kr') as f:
+        dict_aac = json.load(f)
+    dict_ai_res = open_json('C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/json/selected_data3.json')
+
+    add_list_dict_ai_response(dict_aac,dict_ai_res)
+    add_list_dict_ai(dict_aac,dict_ai_res)
+
+    index_8 = 1
+    index_9 = 1
+    label_res = '80'
+    label_cat = '90'
+
+    for i in dict_ai_res['intence']:
+        label_cat = label_cat + str(index_9)
+        for i in range(len(i['response'])):
+            label_res = label_res + str(index_8)
+            node_add_single(dict_aac, int(label_cat) , int(label_res))
+            index_8 = index_8 + 1
+            label_res = '80'
+        index_9 = index_9 + 1
+        label_cat = '90'
+        
+
+
+    make_json(dict_aac,path)
+
+
 
 if __name__ == "__main__":
     main()
-
-
-#만들어야 하는거: 삭제 , 수정(초기화)
 
