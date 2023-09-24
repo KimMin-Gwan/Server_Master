@@ -112,7 +112,7 @@ class Classifier():
         for key, value in self.labels.items():
             if value == max_index:
                 result = key
-        result = result.replace(" ", "")
+        #result = result.replace(" ", "")
         print(result)
         return_data = self.__check_category(result)
         self.text.clear()
