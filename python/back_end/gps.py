@@ -69,8 +69,8 @@ class GPS():
             result_json = {'category': 'default'}
             return result_json
 
-        with open (back_end.constant.AAC_FILE, "r", encoding='cp949') as f:
-                saved_data = json.load(f)
+        # with open (back_end.constant.AAC_FILE, "r", encoding='cp949') as f:
+        #         saved_data = json.load(f)
 
 
 
