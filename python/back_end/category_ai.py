@@ -33,13 +33,13 @@ class Classifier():
         # json to dataframe
         intence = pd.DataFrame(raw_intence)
         # 리스트 분해
-        intence = intence.explode('patterns')
+        intence = intence.explode('response')
         # 특수문자 제거
-        intence['patterns'] = intence['patterns'].str.replace('[^ㄱ-ㅎㅏ-ㅣ가-힣0-9 ]', '')
+        intence['response'] = intence['response'].str.replace('[^ㄱ-ㅎㅏ-ㅣ가-힣0-9 ]', '')
         # 중복제거
-        intence.drop_duplicates( subset=['patterns'], inplace = True)
+        intence.drop_duplicates( subset=['response'], inplace = True)
 
-        text_list = intence['patterns'].tolist()
+        text_list = intence['response'].tolist()
         self.tokenizer.fit_on_texts(text_list)
 
         # text to number
