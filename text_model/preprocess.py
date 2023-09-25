@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import json
 import seaborn as sns
-from numba import jit  
+#from numba import jit  
 #file_path = './../../../text/data/Training/라벨링데이터/KAKAO(1)'
 
 
@@ -30,11 +30,13 @@ def process(df, intence, l_tag):
         data = df.loc[i]
 
         #1. 만약 점원인데 질문을 한다면
-        #if data['SPEAKER'] == '점원' and data['QA'] == 'Q':
-        if data['QA'] == 'Q':
+        if data['SPEAKER'] == '점원' and data['QA'] == 'Q':
+        #if data['QA'] == 'Q':
             # 2. 뭘 질문하고, 카테고리가 뭔가
             q_data = df.loc[i+1]
-            if q_data['QA'] == 'Q':
+            # if q_data['QA'] == 'Q':
+            #     continue
+            if q_data['SPEAKER'] == '점원':
                 continue
             patterns = data['SENTENCE']
             # 3. 거기에 대한 대답은 뭐고, 카테고리가 뭔가
@@ -118,7 +120,7 @@ def process(df, intence, l_tag):
 import time
 
 def main():
-    file_path = './../../../text/한국어_대화/대화데이터/'
+    file_path = 'C:/Users/for/Downloads/대화데이터/'
     file_list = os.listdir(file_path)
     file_size = len(file_list)
     print(file_list)
@@ -151,7 +153,7 @@ def main():
     json_data = {'intence' : intence}
     #print(json_data)
 
-    with open(file_path + 'korean_intence.json', 'w', encoding='utf-8') as f : 
+    with open(file_path + 'korean_intence_client.json', 'w', encoding='utf-8') as f : 
         json.dump(json_data, f, indent=4, ensure_ascii=False)
 
     print(l_tag)
