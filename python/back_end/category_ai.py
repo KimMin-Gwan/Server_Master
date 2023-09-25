@@ -11,7 +11,7 @@ FILE_NAME = 'new_korean_intence.json'
 
 LABEL_FILE = './label_data.txt'
 MODEL_FILE = './model/'
-AAC_FILE = './json_data_230924.json'
+AAC_FILE = './json_data_edit.json'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 warnings.simplefilter(action='ignore', category=FutureWarning) # FutureWarning 제거
