@@ -27,7 +27,7 @@ class Classifier():
 
 
     def __set_intent(self):
-        with open(FILE_PATH + FILE_NAME, 'r', encoding='euc-kr') as f:
+        with open(FILE_PATH + FILE_NAME, 'r', encoding='utf-8') as f:
             json_data = json.load(f)
         raw_intence = json_data['intence']
         # json to dataframe
