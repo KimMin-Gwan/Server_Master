@@ -11,7 +11,7 @@ FILE_NAME = 'new_korean_intence.json'
 
 LABEL_FILE = './label_data.txt'
 MODEL_FILE = './model/'
-AAC_FILE = './json_data_test.json'
+AAC_FILE = './json_data_230924.json'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 warnings.simplefilter(action='ignore', category=FutureWarning) # FutureWarning 제거
@@ -27,7 +27,7 @@ class Classifier():
 
 
     def __set_intent(self):
-        with open(FILE_PATH + FILE_NAME, 'r', encoding='UTF8') as f:
+        with open(FILE_PATH + FILE_NAME, 'r', encoding='UTF-8') as f:
             json_data = json.load(f)
         raw_intence = json_data['intence']
         # json to dataframe
