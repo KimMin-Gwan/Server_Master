@@ -11,7 +11,7 @@ FILE_NAME = 'new_korean_intence.json'
 
 LABEL_FILE = './label_data.txt'
 MODEL_FILE = './model/'
-AAC_FILE = './json_data_edit.json'
+AAC_FILE = './json_data_230924.json'
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 warnings.simplefilter(action='ignore', category=FutureWarning) # FutureWarning 제거
@@ -77,7 +77,7 @@ class Classifier():
     
     # load aac_category
     def __get_aac_category(self):
-        with open(AAC_FILE, 'r', encoding='euc-kr') as f:
+        with open(AAC_FILE, 'r', encoding='utf-8') as f:
             raw_aac = json.load(f)
 
         self.aac_category = raw_aac['AAC']
