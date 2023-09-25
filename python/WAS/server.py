@@ -25,9 +25,9 @@ class AppServer():
                 print('json loaded')
             try:
                 print("incomming data : ",data)
-                response = requests.post(URL, json=data)
+                response = str(requests.post(URL, json=data))
                 #result = self.mainfunction.recog_wav(data['key'])
-                print(type(response))
+                print(type((response)))
                 print(response)
                 result = {"key":response}
                 
