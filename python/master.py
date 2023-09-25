@@ -5,6 +5,7 @@ import uvicorn
 
 ## Server Setting
 HOST = '127.0.0.1'
+#HOST = '61.80.248.231'
 PORT = 7777
 
 ## server

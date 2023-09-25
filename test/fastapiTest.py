@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi import FastAPI, UploadFile, File
+import uvicorn
 import os
 
 #db 입출력도 가능
@@ -39,3 +40,8 @@ async def upload_wav(file: UploadFile = File(..., required=False)):
     else:
         print('well')
     return {"filename": file.filename }
+
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host='61.80.248.231', port=7777)

@@ -4,6 +4,9 @@ from fastapi import UploadFile, File
 import WAS
 import uvicorn
 #from constant import WAV_SAVE_PATH
+import requests
+
+URL = "http://61.80.248.231:7777/get_string" #메소인 테스트
 
 class AppServer():
     def __init__(self, mainfunction):
@@ -22,7 +25,8 @@ class AppServer():
                 print('json loaded')
             try:
                 print("incomming data : ",data)
-                result = self.mainfunction.recog_wav(data['key'])
+                result = requests.post(URL, json=data)
+                #result = self.mainfunction.recog_wav(data['key'])
             except Exception as e:
                 print("Error : ", str(e))
 
