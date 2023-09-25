@@ -21,6 +21,7 @@ class AppServer():
             else:
                 print('json loaded')
             try:
+                print("incomming data : ",data)
                 result = self.mainfunction.recog_wav(data['key'])
             except Exception as e:
                 print("Error : ", str(e))
