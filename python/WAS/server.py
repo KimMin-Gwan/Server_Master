@@ -28,8 +28,9 @@ class AppServer():
                 response = requests.post(URL, json=data)
                 #result = self.mainfunction.recog_wav(data['key'])
                 print(type(response))
-
-                result = {'key':response}
+                print(response)
+                result = {"key":response}
+                
             except Exception as e:
                 print("Error : ", str(e))
 
