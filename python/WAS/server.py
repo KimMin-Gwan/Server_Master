@@ -25,11 +25,12 @@ class AppServer():
                 print('json loaded')
             try:
                 print("incomming data : ",data)
-                response = str(requests.post(URL, json=data))
+                response = requests.post(URL, json=data)
+                result = response.json()
                 #result = self.mainfunction.recog_wav(data['key'])
-                print(type((response)))
-                print(response)
-                result = {"key":response}
+                #print(type((response)))
+                print(result)
+                #result = {"key":response}
                 
             except Exception as e:
                 print("Error : ", str(e))
