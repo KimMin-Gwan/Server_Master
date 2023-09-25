@@ -27,7 +27,7 @@ class Classifier():
 
 
     def __set_intent(self):
-        with open(FILE_PATH + FILE_NAME, 'r', encoding='utf-8') as f:
+        with open(FILE_PATH + FILE_NAME, 'r', encoding='UTF-8') as f:
             json_data = json.load(f)
         raw_intence = json_data['intence']
         # json to dataframe
@@ -77,7 +77,7 @@ class Classifier():
     
     # load aac_category
     def __get_aac_category(self):
-        with open(AAC_FILE, 'r', encoding='utf-8') as f:
+        with open(AAC_FILE, 'r', encoding='euc-kr') as f:
             raw_aac = json.load(f)
 
         self.aac_category = raw_aac['AAC']
