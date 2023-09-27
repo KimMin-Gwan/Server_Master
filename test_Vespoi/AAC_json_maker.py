@@ -74,7 +74,7 @@ def preprocessing_text_data_category(file_path): #카테고리 txt 파일에 사
 
     text_data = []
     for i in split_data:
-        new_str = re.sub(r"[^\uAC00-\uD7A3a-zA-Z\s0-9]", "", i)
+        new_str = re.sub(r"[^\uAC00-\uD7A3a-zA-Z\s0-9()]", "", i)
         new_str = new_str.replace(" ", "")
         #print(new_str)
         text_data.append(new_str+":")
@@ -331,29 +331,8 @@ def make_json_urgency(dict_data): #json 저장
 
 
 def main():
-    path = 'C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/json/json_data_230924.json'
-    with open (path, "r",encoding='utf-8') as f:
-        dict_aac = json.load(f)
-    dict_ai_res = open_json('C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/json/selected_data3.json')
-
-    add_list_dict_ai_response(dict_aac,dict_ai_res)
-    add_list_dict_ai(dict_aac,dict_ai_res)
-
-    index_8 = 1
-    index_9 = 1
-    label_res = '8'
-    label_cat = '90'
-
-    for i in dict_ai_res['intence']:
-        label_cat = label_cat + str(index_9)
-        for i in range(len(i['response'])):
-            label_res = label_res + str(index_8)
-            node_add_single(dict_aac, int(label_cat) , int(label_res))
-            index_8 = index_8 + 1
-            label_res = '8'
-        index_9 = index_9 + 1
-        label_cat = '90'
-        
+    path = 'C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/json/json_data_230925.json'
+    dict_aac = open_json(path)
 
 
     make_json(dict_aac,path)

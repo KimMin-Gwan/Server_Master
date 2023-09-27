@@ -175,6 +175,26 @@ def fold_aac_add:  #이러면 코드가 접히지
 
     node_list=['전화해주세요','119 불러주세요','112 불러주세요','가족에게 연락해주세요','물을 마시고 싶어요','화장실을 가고 싶어요','돈을 잃어버렸어요','성폭행을 당했어요']
     node_add_multi(dict_urgency_aac, id_finder(dict_urgency_aac,"기타 긴급 상황"), id_finder_multi(dict_urgency_aac,node_list))
+        add_txt_dict_location(dict_aac,'C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/카테고리/temp_location.txt')
+    add_txt_dict_category(dict_aac,'C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/카테고리/temp_category.txt')
+    add_txt_dict_AAC(dict_aac,'C:/Users/for/Study/ComPass/Back_Test/Server_Master/test_Vespoi/카테고리/temp_AAC.txt')
+    node_add_multi(dict_aac, 1010, [204,207,2017,2018])
+
+    node_list = "머리가/목이/귀가/입이/코가/눈이/어깨가/손이/팔이/가슴이/배가/등이/엉덩이가/다리가/발이 ".split('/')
+    node_add_multi(dict_aac, 2017, id_finder_multi(dict_aac,node_list))
+    node_where = node_list
+    node_list = "추워요/더워요/아파요/아프지않아요/이상해요/저려요/경련이나요/욱씬거려요/가려워요/다쳤어요".split('/')
+    add_multi_to_multi(dict_aac,node_where,id_finder_multi(dict_aac,node_list))
+
+    node_list = "휠체어를/몸을/침대를/의자를/".split('/')
+    node_add_multi(dict_aac, 2018, id_finder_multi(dict_aac,node_list))
+    node_where = node_list
+    node_list = "앞으로/뒤로/왼쪽으로/오른쪽으로".split('/')
+    add_multi_to_multi(dict_aac,node_where,id_finder_multi(dict_aac,node_list))
+    node_where = node_list
+    node_list = "가주세요/밀어주세요/돌려주세요/끌어주세요".split('/')
+    add_multi_to_multi(dict_aac,node_where,id_finder_multi(dict_aac,node_list))
+
 
 def fold_acc_adder:
     def add_single_dict_location(dict_aac,name): #장소 추가
@@ -189,3 +209,23 @@ def fold_acc_adder:
         "id": int(location_label + str(index)),
         "name" : name
     })
+
+def ai어쩌구():
+    add_list_dict_ai_response(dict_aac,dict_ai_res)
+    add_list_dict_ai(dict_aac,dict_ai_res)
+
+    index_8 = 1
+    index_9 = 1
+    label_res = '8'
+    label_cat = '90'
+
+    for i in dict_ai_res['intence']:
+        label_cat = label_cat + str(index_9)
+        for i in range(len(i['response'])):
+            label_res = label_res + str(index_8)
+            node_add_single(dict_aac, int(label_cat) , int(label_res))
+            index_8 = index_8 + 1
+            label_res = '8'
+        index_9 = index_9 + 1
+        label_cat = '90'
+        
